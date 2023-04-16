@@ -8,6 +8,7 @@ import com.educaagenda.backend.model.Event;
 import com.educaagenda.backend.model.EventReview;
 import com.educaagenda.backend.model.Participante;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,7 +19,7 @@ public class EventRequestDTO  implements Serializable{
     private Long id;
 
     @NotNull(message = "Nome do Evento deve ser preenchido")
-    @Size(min = 5, max = 50, message = "Nome do Evento deve ter entre 5 e 50 caracteres")
+    @Size(min = 5, max = 250, message = "Nome do Evento deve ter entre 5 e 250 caracteres")
     private String name;
 
     private String campus;
@@ -31,7 +32,7 @@ public class EventRequestDTO  implements Serializable{
     private LocalDate endDate;
 
     @NotNull(message = "Detalhe deve ser preenchido")
-    @Size(min = 10, max = 100, message = "Nome do Evento deve ter entre 10 e 100 caracteres")
+    @Size(min = 10, max = 2000, message = "Nome do Evento deve ter entre 10 e 100 caracteres")
     private String details;
     
     @NotNull(message = "Folder deve ser preenchido")
