@@ -1,8 +1,10 @@
-import { type } from 'os';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import {Button, Card, Form} from "react-bootstrap"
 import { useTranslation } from 'react-i18next'
 import {useAPI} from '../../../service/API'
+import AuthContext from '../../../store/authContext';
+
 
 type LoginForm = {
   email: string;
@@ -10,9 +12,9 @@ type LoginForm = {
 }
 
 function Login() {
-
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const api = useAPI();
-
   const [state, setState] = useState<LoginForm>({email: '', password:''});
   const {t} = useTranslation()
 
@@ -22,7 +24,6 @@ function Login() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(state);
 
     const basicAuth = 'Basic ' + btoa(state.email + ':' + state.password);
     const htmlConfig = {
@@ -34,7 +35,9 @@ function Login() {
     }
 
     api.get('my/participante', {}, htmlConfig).then((res) => {
-      console.log("Sucesso: ", res);
+      if (auth.updateUser) auth.updateUser(res.data);
+      navigate('/principal/home');
+
     }).catch((e) => {
       console.log("Erro! ", e);
     })

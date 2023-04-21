@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
-import { Login } from './pages'
+import MainRouter from './routes/MainRouter'
+import AuthContext, { User } from './store/authContext'
 
 function App() {
+
+  const [user, setUser] = useState<User>();
+
   return (
-    <Login />
+    <AuthContext.Provider value={{user, updateUser: setUser}}>
+      <MainRouter />
+    </AuthContext.Provider>
   )
 }
 

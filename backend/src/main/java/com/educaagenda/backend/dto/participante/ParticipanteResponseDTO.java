@@ -1,11 +1,13 @@
 package com.educaagenda.backend.dto.participante;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import com.educaagenda.backend.model.Event;
 import com.educaagenda.backend.model.EventReview;
 import com.educaagenda.backend.model.Participante;
+import com.educaagenda.backend.model.Role;
 
 public class ParticipanteResponseDTO implements Serializable {
 
@@ -14,9 +16,10 @@ public class ParticipanteResponseDTO implements Serializable {
     private String tipo;
     private String avatar;
     private String email;
-    private String password;
+    //private String password;
     private Set<Event> events;
     private Set<EventReview> reviews;
+    private List<Role> roles;
 
     public ParticipanteResponseDTO() { }
 
@@ -26,22 +29,26 @@ public class ParticipanteResponseDTO implements Serializable {
         avatar = participante.getAvatar();
         tipo = participante.getTipo();
         email = participante.getEmail();        
-        password = participante.getPassword();
+        //password = participante.getPassword();
         events = participante.getEvents();
         reviews = participante.getReviews();
+        roles = participante.getRoles();
     }    
 
-    public ParticipanteResponseDTO(Long id, String name, String tipo, String avatar, String email, String password, Set<Event> events,
-            Set<EventReview> reviews) {
+    public ParticipanteResponseDTO(Long id, String name, String tipo, String avatar, String email, 
+    //String password, 
+    Set<Event> events, Set<EventReview> reviews, List<Role> roles) {
         this.id = id;
         this.name = name;
         this.tipo = tipo;
         this.avatar = avatar;
         this.email = email;
-        this.password = password;
+        //this.password = password;
         this.events = events;
         this.reviews = reviews;
+        this.roles = roles;
     }
+    
 
     public Long getId() {
         return id;
@@ -67,13 +74,13 @@ public class ParticipanteResponseDTO implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    // public String getPassword() {
+    //     return password;
+    // }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    // public void setPassword(String password) {
+    //     this.password = password;
+    // }
 
     public String getTipo() {
         return tipo;
@@ -105,6 +112,14 @@ public class ParticipanteResponseDTO implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     

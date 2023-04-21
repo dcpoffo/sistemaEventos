@@ -32,7 +32,7 @@ public class EventRequestDTO  implements Serializable{
     private LocalDate endDate;
 
     @NotNull(message = "Detalhe deve ser preenchido")
-    @Size(min = 10, max = 2000, message = "Nome do Evento deve ter entre 10 e 100 caracteres")
+    @Size(min = 10, max = 100, message = "Nome do Evento deve ter entre 10 e 100 caracteres")
     private String details;
     
     @NotNull(message = "Folder deve ser preenchido")
