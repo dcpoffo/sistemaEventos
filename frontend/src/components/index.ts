@@ -1,1 +1,1 @@
-export { default as ComponenteExemplo } from './componenteExemplo/ComponenteExemplo'
+export * from './layout'

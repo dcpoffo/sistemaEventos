@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { FaCogs } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 
-
 import styles from './NotFound.module.scss'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../store/authContext'
@@ -18,9 +17,13 @@ function NotFound() {
         <h1>{t('pages.notFound.title')}</h1>
         <p>{t('pages.notFound.message')}</p>
         {auth.user ? (
-          <Link className={styles.link} to={'/home'}>{t('pages.notFound.home')} </Link>
+          <Link className={styles.link} to={'/home'}>
+            {t('pages.notFound.home')}{' '}
+          </Link>
         ) : (
-          <Link className={styles.link} to={''}>{t('pages.notFound.home')} </Link>
+          <Link className={styles.link} to={''}>
+            {t('pages.notFound.home')}{' '}
+          </Link>
         )}
       </div>
     </div>

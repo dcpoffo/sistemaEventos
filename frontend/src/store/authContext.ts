@@ -3,7 +3,7 @@ import { createContext } from 'react'
 export type User = {
   name: string
   login: string
-  id: number  
+  id: number
   roles: { authority: string }[]
 }
 
@@ -16,4 +16,4 @@ const initialValue: AuthType = {}
 
 const AuthContext = createContext(initialValue)
 
-export default AuthContext;
+export default AuthContext
