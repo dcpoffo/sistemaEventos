@@ -7,16 +7,16 @@ INSERT INTO ROLE (ROLE) values ('ROLE_ADMIN');
 INSERT INTO ROLE (ROLE) values ('ROLE_ACADEMICO');
 INSERT INTO ROLE (ROLE) values ('ROLE_ORGANIZADOR');
 
-insert into participante (name, email, tipo, password, avatar) values ('Participante 1','email1@teste.com','ACADEMICO','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/imagem-de-perfil-de-personagem-de-desenho-animado-avatar-jovem_18591-55058.jpg');
+insert into participante (name, email, tipo, password, avatar) values ('Academico 1','academico1@gmail.com','ACADEMICO','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/imagem-de-perfil-de-personagem-de-desenho-animado-avatar-jovem_18591-55058.jpg');
 insert into participante_role (participante_id, role_id) values (1,2);
 
-insert into participante (name, email, tipo, password, avatar) values ('Participante 2','email2@teste.com','ACADEMICO','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/imagem-de-perfil-de-personagem-de-desenho-animado-avatar-jovem_18591-55056.jpg');
+insert into participante (name, email, tipo, password, avatar) values ('Academico 2','academico2@gmail.com','ACADEMICO','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/imagem-de-perfil-de-personagem-de-desenho-animado-avatar-jovem_18591-55056.jpg');
 insert into participante_role (participante_id, role_id) values (2,2);
 
-insert into participante (name, email, tipo, password, avatar) values ('Participante 3','email3@teste.com','ORGANIZADOR','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/imagem-de-perfil-de-personagem-de-desenho-animado-avatar-jovem_18591-55059.jpg');
+insert into participante (name, email, tipo, password, avatar) values ('Organizador 1','organizador1@gmail.com','ORGANIZADOR','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/imagem-de-perfil-de-personagem-de-desenho-animado-avatar-jovem_18591-55059.jpg');
 insert into participante_role (participante_id, role_id) values (3,3);
 
-insert into participante (name, email, tipo, password, avatar) values ('Participante 4','email4@teste.com','ORGANIZADOR','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/servicos-de-suporte-ao-cliente_18591-39587.jpg');
+insert into participante (name, email, tipo, password, avatar) values ('Organizador 2','organizador2@teste.com','ORGANIZADOR','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-premium/servicos-de-suporte-ao-cliente_18591-39587.jpg');
 insert into participante_role (participante_id, role_id) values (4,3);
 
 insert into participante (name, email, tipo, password, avatar) values ('Darlan','dcpoffo@gmail.com','ORGANIZADOR','$2a$12$r2kzbWrMIFbl2.J9MAVtVOT83gFpdfz4BMjVlXrv6OdMc7dlvp9qW', 'https://img.freepik.com/vetores-gratis/garota-de-camisa-vermelha_1308-37044.jpg');

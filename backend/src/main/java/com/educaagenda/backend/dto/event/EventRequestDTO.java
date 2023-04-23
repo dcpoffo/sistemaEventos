@@ -8,7 +8,6 @@ import com.educaagenda.backend.model.Event;
 import com.educaagenda.backend.model.EventReview;
 import com.educaagenda.backend.model.Participante;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

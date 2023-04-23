@@ -2,49 +2,80 @@ import React, { useContext } from "react";
 import AuthContext from "../../../store/authContext";
 
 import styles from './Sidebar.module.scss'
-import { FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-function Sidebar() {
+import educameet from '../../../assets/img/educameet.png'
 
+type Link = {
+    text: string,
+    path: string,
+    icon: JSX.Element
+}
+
+type UserLink = {
+    text: string,
+    path: string
+}
+
+export type SidebarProps = {
+    links: Link[],
+    userLinks: UserLink[]
+}
+
+function Sidebar({ links, userLinks }: SidebarProps) {
+    const { t } = useTranslation();
     const auth = useContext(AuthContext);
+
+    function logout() {
+        if (auth.updateUser) auth.updateUser();
+    }
+
     return (
         <div className={'d-flex flex-column flex-shrink-0 p-3 text-bg-dark ' + styles.sidebar}>
-            <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <span className="fs-4">Sidebar</span>
-            </a>
+                <img className={styles.img} src={educameet} alt={'educameet'} />
+            {/* <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <span className="fs-4">{t('layout.brand')}</span>
+            </a> */}
             <hr />
             <ul className="nav nav-pills flex-column mb-auto">
-                <li className="nav-item">
-                    <a href="#" className="nav-link active" aria-current="page">
-                        <FaHome />
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link text-white"> Dashboard </a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link text-white"> Orders </a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link text-white"> Products </a>
-                </li>
-                <li>
-                    <a href="#" className="nav-link text-white"> Customers </a>
-                </li>
+                {
+                    links.map((link) => {
+                        return (
+                            <li key={link.path} className="nav-item">
+                                <Link to={link.path} className="nav-link text-white" aria-current="page">
+                                    {link.icon} {' '}
+                                    {t(link.text)}
+                                </Link>
+                            </li>
+                        )
+                    })
+                }
             </ul>
             <hr />
             <div className="dropdown">
                 <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2" />
-                    <strong>mdo</strong>
+                    <img src="https://github.com/dcpoffo.png" alt="" width="32" height="32" className="rounded-circle me-2" />
+                    <strong>{auth.user?.name}</strong>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a className="dropdown-item" href="#">New project...</a></li>
-                    <li><a className="dropdown-item" href="#">Settings</a></li>
-                    <li><a className="dropdown-item" href="#">Profile</a></li>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item" href="#">Sign out</a></li>
+                    {
+                        userLinks.map((link) => {
+                            return (
+                                <li key={link.path}>
+                                    <Link className="dropdown-item" to={link.path}>
+                                        {t(link.text)}
+                                    </Link>
+                                </li>
+                            )
+                        })
+                    }
+                    <li> <hr className="dropdown-divider"></hr> </li>
+                    <li>
+                        <div style={{ cursor: "pointer" }} onClick={logout} className="dropdown-item">
+                            {t('layout.close')}
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
