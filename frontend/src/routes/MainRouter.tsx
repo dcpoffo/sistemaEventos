@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { Outlet, Routes, Route, Navigate } from 'react-router-dom'
 import NotFound from '../pages/notFound/NotFound'
-import { Home, Login, PublicPage } from '../pages'
+import { Dashboard, Home, Login, Participantes, PublicPage } from '../pages'
 import AuthContext from '../store/authContext'
 import { BaseLayout } from '../components'
+import Profile from '../pages/profile/Profile'
+import Eventos from '../pages/eventos/Eventos'
 
 const RequireAuth = ({ children }: { children: any }) => {
   const auth = useContext(AuthContext)
@@ -31,6 +33,10 @@ const MainRouter = () => {
           }
         >
           <Route path='/principal/home' element={<Home />} />
+          <Route path='/principal/dashboard' element={<Dashboard />} />
+          <Route path='/principal/profile' element={<Profile />} />
+          <Route path='/principal/participantes' element={<Participantes />} />
+          <Route path='/principal/eventos' element={<Eventos />} />
         </Route>
       </Route>
     </Routes>

@@ -1,3 +1,6 @@
 export { Login } from './authentication'
 export { default as Home } from './home/Home'
+export { default as Dashboard } from './dashboard/Dashboard'
+export { default as Profile } from './profile/Profile'
+export { default as Participantes } from './participantes/Participantes'
 export { default as PublicPage } from './publicPage/PublicPage'

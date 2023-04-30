@@ -4,6 +4,12 @@ export type User = {
   name: string
   login: string
   id: number
+  profileImage: {
+    id: number
+    name: string
+    type: string
+    filePath: string
+  }
   roles: { authority: string }[]
 }
 

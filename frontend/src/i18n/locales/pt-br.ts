@@ -6,11 +6,10 @@ export default {
       sidebar: {
         home: 'Home',
         dashboard: 'Dashboard',
-        participant: 'Participantes',        
+        participant: 'Participantes',
         event: 'Eventos',
         profile: 'Perfil',
-
-      }
+      },
     },
     auth: {
       banner: {
