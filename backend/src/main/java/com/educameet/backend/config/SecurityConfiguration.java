@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/**").permitAll()
                 .requestMatchers("/my/**").authenticated()
+                .requestMatchers("/files/**").permitAll()
                 .anyRequest().hasAnyRole("ADMIN", "ORGANIZADOR");
                 //.anyRequest().authenticated();
         http.csrf().disable();

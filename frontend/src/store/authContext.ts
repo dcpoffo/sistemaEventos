@@ -10,6 +10,7 @@ export type User = {
     type: string
     filePath: string
   }
+  basicAuth: string;  
   roles: { authority: string }[]
 }
 

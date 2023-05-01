@@ -36,7 +36,7 @@ function Login() {
     api
       .get('my/participante', {}, htmlConfig)
       .then((res) => {
-        if (auth.updateUser) auth.updateUser(res.data)
+        (auth.updateUser) ? auth.updateUser({...res.data, basicAuth}) : null;
         navigate('/principal/home')
       })
       .catch((e) => {

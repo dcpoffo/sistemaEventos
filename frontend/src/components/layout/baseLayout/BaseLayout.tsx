@@ -24,7 +24,7 @@ function BaseLayout() {
         },
         {
           text: 'layout.sidebar.participant',
-          path: '/principal/participantes',
+          path: '/principal/ListaParticipantes',
           icon: <BsPersonVcardFill />,
         },
         {
@@ -54,7 +54,7 @@ function BaseLayout() {
         },
         {
           text: 'layout.sidebar.participant',
-          path: '/principal/participantes',
+          path: '/principal/ListaParticipantes',
           icon: <BsPersonVcardFill />,
         },
         {
@@ -79,7 +79,7 @@ function BaseLayout() {
         },
         {
           text: 'layout.sidebar.participant',
-          path: '/principal/participantes',
+          path: '/principal/ListaParticipantes',
           icon: <BsPersonVcardFill />,
         },
         {

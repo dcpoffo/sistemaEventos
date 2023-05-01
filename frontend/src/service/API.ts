@@ -1,15 +1,20 @@
 import axios from 'axios'
+import { useContext } from 'react'
+import AuthContext from '../store/authContext'
 
 export const useAPI = () => {
+  const auth = useContext(AuthContext);
   const URL_BASE: string | undefined = process.env.REACT_APP_BACK_HOST
 
   const defaultConfigHtml = () => {
-    return {
+    const htmlConfig = {
       headers: {
         'Content-Type': 'application/json',
         'Acess-Control-Allow-Origin': '*',
+        Authorization: auth.user?.basicAuth,
       },
     }
+    return htmlConfig;
   }
 
   const get = (url: string, params: any, config?: any) => {

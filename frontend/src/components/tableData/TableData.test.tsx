@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import Participantes from './Participantes'
+import TableData from './TableData'
 
 test('renders login page', () => {
-  render(<Participantes />)
+  render(<TableData url={''} fields={[]} actions={[]} query={{}} />)
   const linkElement = screen.getByText(/TeamsList/i)
   expect(linkElement).toBeInTheDocument()
 })
