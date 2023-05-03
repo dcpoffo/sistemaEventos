@@ -9,6 +9,7 @@ import { BaseLayout } from '../components'
 import Profile from '../pages/profile/Profile'
 import Eventos from '../pages/eventos/Eventos'
 import ListaParticipantes from '../pages/participantes/listaParticipantes/ListaParticipantes'
+import AddParticipantes from '../pages/participantes/addParticipantes/AddParticipantes'
 
 const RequireAuth = ({ children }: { children: any }) => {
   const auth = useContext(AuthContext)
@@ -29,20 +30,24 @@ const MainRouter = () => {
 
         <Route
           path='/principal'
+          errorElement={<NotFound />}
           element={
             <RequireAuth>
               <BaseLayout />
             </RequireAuth>
           }
         >
-          <Route path='/principal/home' element={<Home />} />
-          <Route path='/principal/dashboard' element={<Dashboard />} />
-          <Route path='/principal/profile' element={<Profile />} />
-          <Route path='/principal/listaParticipantes' element={<ListaParticipantes />} />
-          <Route path='/principal/eventos' element={<Eventos />} />
+          <Route path='home' element={<Home />} />
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='profile' element={<Profile />} />
+          <Route path='participantes' element={<Outlet />}>
+            <Route path='' element={<ListaParticipantes />} />
+            <Route path='add' element={<AddParticipantes />} />
+          </Route>
+          <Route path='eventos' element={<Eventos />} />
         </Route>
       </Route>
-    </Routes>
+    </Routes >
   )
 }
 

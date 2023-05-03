@@ -1,5 +1,6 @@
 package com.educameet.backend.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.educameet.backend.dto.participante.ParticipanteRequestDTO;
 import com.educameet.backend.dto.participante.ParticipanteResponseDTO;
 import com.educameet.backend.enums.RoleNames;
 import com.educameet.backend.exception.exceptions.ConflictStoreException;
 import com.educameet.backend.exception.exceptions.EmailValidatorException;
+import com.educameet.backend.model.FileData;
 import com.educameet.backend.model.Participante;
 import com.educameet.backend.model.Role;
 import com.educameet.backend.repository.ParticipanteRepository;
@@ -31,6 +34,9 @@ public class ParticipanteService {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    FileDataService fileDataService;
+
     public List<Participante> findAll() {
         return participanteRepository.findAll();
     }
@@ -41,8 +47,9 @@ public class ParticipanteService {
         return ResponseEntity.status(HttpStatus.OK).body(new ParticipanteResponseDTO(participante));
     }
 
-    @Transactional
-    public ParticipanteResponseDTO save(ParticipanteRequestDTO participanteRequestDTO) {
+    @Transactional    
+    public ResponseEntity<Object> save(ParticipanteRequestDTO participanteRequestDTO, MultipartFile file) throws IOException {
+    //public ParticipanteResponseDTO save(ParticipanteRequestDTO participanteRequestDTO) {
 
         Participante participante = participanteRequestDTO.toParticipante();
 
@@ -76,9 +83,15 @@ public class ParticipanteService {
         roles.add(role.get());
         participante.setRoles(roles);
 
+        
         participanteRepository.save(participante);
         
-        return new ParticipanteResponseDTO(participante);
+        FileData profileImage = fileDataService.uploadImageToFileSystem(file, participante.getId());
+        participante.setProfileImage(profileImage);
+        
+        //return ResponseEntity.status(HttpStatus.CREATED).body(new StudentResponseDTO(studentRepository.save(student)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ParticipanteResponseDTO(participanteRepository.save(participante)));
+        //return new ParticipanteResponseDTO(participante);
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.educameet.backend.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.educameet.backend.dto.participante.ParticipanteRequestDTO;
 import com.educameet.backend.dto.participante.ParticipanteResponseDTO;
@@ -45,9 +48,14 @@ public class ParticipantesController {
         return list.stream().map(ParticipanteResponseDTO::new).toList();
     }
 
+    // @PostMapping
+    // public ParticipanteResponseDTO save(@RequestBody @Valid ParticipanteRequestDTO participanteRequestDTO) {
+    //     return participanteService.save(participanteRequestDTO);
+    // }
+
     @PostMapping
-    public ParticipanteResponseDTO save(@RequestBody @Valid ParticipanteRequestDTO participanteRequestDTO) {
-        return participanteService.save(participanteRequestDTO);
+    public ResponseEntity<Object> save(ParticipanteRequestDTO participanteRequestDTO, @RequestParam("file") MultipartFile file) throws IOException {
+        return participanteService.save(participanteRequestDTO, file);
     }
 
     @PutMapping("/{id}")
