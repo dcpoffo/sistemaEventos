@@ -21,5 +21,9 @@ export const useAPI = () => {
     return axios.get(URL_BASE + url, !config ? defaultConfigHtml() : config)
   }
 
-  return { get }
+  const post = (url: string, data: any, config?: any) => {
+    return axios.post(URL_BASE + url, data, !config ? defaultConfigHtml() : config)
+  }
+
+  return { get, post }
 }
