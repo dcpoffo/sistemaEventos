@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { TableData } from '../../../components';
-import { useNavigate } from 'react-router-dom';
-import { Button, Card, Form, Dropdown } from 'react-bootstrap';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Card, Form } from 'react-bootstrap';
 import { useAPI } from '../../../service/API';
 import AuthContext from '../../../store/authContext';
 
@@ -11,28 +11,31 @@ import educameet from "../../../assets/img/educameet.png";
 type ParticipanteData = {
   file?: any,
   name: string,
-  email: string,
   tipo: string,
-  password: string
 }
 
-function AddParticipantes() {
+function EditarParticipante() {
+
+  const { id } = useParams();
 
   const auth = useContext(AuthContext);
 
   const [state, setState] = useState<ParticipanteData>(
     {
       name: '',
-      email: '',
       tipo: '',
-      password: ''
     })
 
   const api = useAPI();
-
   const navigate = useNavigate();
-
   const [profileImage, setProfileImage] = useState<any>(educameet);
+
+  useEffect(() => {
+    api.get('participantes/' + id, {}).then((res) => {
+      setState({name: res.data.name, tipo: res.data.tipo})
+      setProfileImage(process.env.REACT_APP_BACK_HOST + 'files/' + res.data.profileImage.id)
+    })
+  }, [id])
 
   const updateState = (e: any, field: string) => {
     setState((state) => ({ ...state, [field]: e.target.value }))
@@ -66,19 +69,17 @@ function AddParticipantes() {
     const formData = new FormData();
     formData.append("file", state.file);
     formData.append("name", state.name);
-    formData.append("email", state.email);
     formData.append("tipo", state.tipo);
-    formData.append("password", state.password);
 
 
-    api.post('participantes', formData, htmlConfig).then(() => {
+    api.put('participantes', formData, htmlConfig).then(() => {
       navigate('/principal/participantes')
     })
   }
 
   return (
     <div>
-      <h1>Cadastro de Participantes</h1>
+      <h1>Edição de Participante</h1>
 
       <Card.Body>
         <Form onSubmit={handleSubmit}>
@@ -100,16 +101,8 @@ function AddParticipantes() {
               type='text' placeholder='Digite com o nome do Participante'
               value={state.name} onChange={(e) => updateState(e, 'name')}
             />
-          </Form.Group>
-
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Label> E-mail/Login </Form.Label>
-            <Form.Control
-              type='email' placeholder='Digite o login (e-mail)'
-              value={state.email} onChange={(e) => updateState(e, 'email')}
-            />
-          </Form.Group>
-
+          </Form.Group>          
+          
           <Form.Group className='mb-3'>
             <Form.Label> Tipo (ACADÊMICO OU ORGANIZADOR)</Form.Label>
             <Form.Select aria-label="tipo" value={state.tipo} onChange={(e) => updateState(e, 'tipo')}>
@@ -117,18 +110,10 @@ function AddParticipantes() {
               <option value="ACADEMICO">ACADEMICO</option>
               <option value="ORGANIZADOR">ORGANIZADOR</option>              
             </Form.Select>             
-          </Form.Group>
-
-          <Form.Group className='mb-3' controlId='formBasicPassword'>
-            <Form.Label>Senha</Form.Label>
-            <Form.Control
-              type='password' placeholder='Senha'
-              value={state.password} onChange={(e) => updateState(e, 'password')}
-            />
-          </Form.Group>
+          </Form.Group>         
 
           <Button variant='primary' type='submit'>
-            Cadastrar
+            Alterar
           </Button>
         </Form>
       </Card.Body>
@@ -136,4 +121,4 @@ function AddParticipantes() {
   )
 }
 
-export default AddParticipantes
+export default EditarParticipante

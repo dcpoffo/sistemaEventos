@@ -11,20 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.educameet.backend.model.FileData;
 import com.educameet.backend.repository.FileRepository;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 @Service
 public class FileDataService {
     
     @Autowired
     FileRepository fileRepository;
 
-    @Autowired
-    private HttpServletRequest request;
-
     public FileData uploadImageToFileSystem(MultipartFile file, Long clientId) throws IOException {  
        // String teste = request.getServletContext().getRealPath("null");
-        String FOLDER_PATH = "D:\\SISTEMAS\\React\\Evento\\images\\" + + clientId + "\\";
+        String FOLDER_PATH = "D:\\SISTEMAS\\React\\Evento\\images\\" + clientId + "\\";
         String filePath= FOLDER_PATH + file.getOriginalFilename();
 
         FileData fileData = fileRepository.save(new FileData(clientId, file.getOriginalFilename(), file.getContentType(), filePath));

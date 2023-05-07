@@ -56,7 +56,7 @@ public class Participante implements UserDetails{
     public Participante() { }    
 
     public Participante(long id, String name, String tipo, String email, String password, Set<Event> events,
-            Set<EventReview> reviews, List<Role> roles) {
+            Set<EventReview> reviews, List<Role> roles, FileData profileImage) {
         this.id = id;
         this.name = name;
         this.tipo = tipo;
@@ -65,6 +65,7 @@ public class Participante implements UserDetails{
         this.events = events;
         this.reviews = reviews;
         this.roles = roles;
+        this.profileImage = profileImage;
     }    
     
     public long getId() {

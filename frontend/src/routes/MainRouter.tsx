@@ -10,6 +10,7 @@ import Profile from '../pages/profile/Profile'
 import Eventos from '../pages/eventos/Eventos'
 import ListaParticipantes from '../pages/participantes/listaParticipantes/ListaParticipantes'
 import AddParticipantes from '../pages/participantes/addParticipantes/AddParticipantes'
+import EditarParticipante from '../pages/participantes/editarParticipantes/EditarParticipante'
 
 const RequireAuth = ({ children }: { children: any }) => {
   const auth = useContext(AuthContext)
@@ -43,6 +44,7 @@ const MainRouter = () => {
           <Route path='participantes' element={<Outlet />}>
             <Route path='' element={<ListaParticipantes />} />
             <Route path='add' element={<AddParticipantes />} />
+            <Route path='edit/:id' element={<EditarParticipante />} />
           </Route>
           <Route path='eventos' element={<Eventos />} />
         </Route>

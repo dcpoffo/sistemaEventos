@@ -48,21 +48,18 @@ public class ParticipantesController {
         return list.stream().map(ParticipanteResponseDTO::new).toList();
     }
 
-    // @PostMapping
-    // public ParticipanteResponseDTO save(@RequestBody @Valid ParticipanteRequestDTO participanteRequestDTO) {
-    //     return participanteService.save(participanteRequestDTO);
-    // }
-
     @PostMapping
-    public ResponseEntity<Object> save(ParticipanteRequestDTO participanteRequestDTO, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<Object> save(ParticipanteRequestDTO participanteRequestDTO,
+            @RequestParam("file") MultipartFile file) throws IOException {
         return participanteService.save(participanteRequestDTO, file);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(
-            @PathVariable(name = "id") Long id,            
-            @RequestBody @Valid ParticipanteRequestDTO participanteRequestDTO) {
-        return participanteService.update(id, participanteRequestDTO);
+            @PathVariable(name = "id") Long id,
+            ParticipanteRequestDTO participanteRequestDTO,
+            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        return participanteService.update(id, participanteRequestDTO, file);
     }
 
     @DeleteMapping("/{id}")

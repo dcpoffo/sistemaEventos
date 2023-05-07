@@ -32,10 +32,10 @@ public class ParticipanteResponseDTO implements Serializable {
         events = participante.getEvents();
         reviews = participante.getReviews();
         roles = participante.getRoles();
-        profileImage = participante.getProfileImage();
+        profileImage = participante.getProfileImage();        
     }    
 
-    public ParticipanteResponseDTO(Long id, String name, String tipo, String email, Set<Event> events, Set<EventReview> reviews, List<Role> roles) {
+    public ParticipanteResponseDTO(Long id, String name, String tipo, String email, Set<Event> events, Set<EventReview> reviews, List<Role> roles, FileData profileImage) {
         this.id = id;
         this.name = name;
         this.tipo = tipo;
@@ -44,6 +44,7 @@ public class ParticipanteResponseDTO implements Serializable {
         this.events = events;
         this.reviews = reviews;
         this.roles = roles;
+        this.profileImage = profileImage;
     }    
 
     public Long getId() {

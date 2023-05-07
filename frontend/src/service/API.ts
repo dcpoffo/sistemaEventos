@@ -25,5 +25,14 @@ export const useAPI = () => {
     return axios.post(URL_BASE + url, data, !config ? defaultConfigHtml() : config)
   }
 
-  return { get, post }
+  const put = (url: string, data: any, config?: any) => {
+      return axios.put(URL_BASE + url, data, !config ? defaultConfigHtml() : config)    
+  }
+
+  const _delete = (url: string, config?: any) => { 
+      return axios.delete(URL_BASE + url, !config ? defaultConfigHtml() : config )
+  }
+
+  return { get, post, put, _delete}
+
 }
