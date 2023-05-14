@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import TableData from './TableData'
 
 test('renders login page', () => {
-  render(<TableData url={''} fields={[]} actions={[]} query={{}} />)
+  render(<TableData url={''} fields={[]} actions={[]} filters={{}} />)
   const linkElement = screen.getByText(/TeamsList/i)
   expect(linkElement).toBeInTheDocument()
 })

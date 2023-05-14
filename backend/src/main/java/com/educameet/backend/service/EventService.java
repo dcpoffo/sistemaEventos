@@ -108,7 +108,7 @@ public class EventService {
         event.getParticipantes().add(participante);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new EventResponseDTO(eventRepository.save(event)));
-    }    
+    }
 
     @Transactional
     public EventResponseDTO saveScore(Long id) {
@@ -118,12 +118,12 @@ public class EventService {
 
         // serviço para atualizar as atualizações
         AtualizarScoreService atualizarScoreService = new AtualizarScoreService();
-        atualizarScoreService.atualizarScore(event);        
+        atualizarScoreService.atualizarScore(event);
 
         return new EventResponseDTO(eventRepository.save(event));
     }
 
     public ResponseEntity<Object> findAllByData(LocalDate startDate) {
-        return ResponseEntity.status(HttpStatus.OK).body(eventRepository.findAllByStartDate(startDate));        
+        return ResponseEntity.status(HttpStatus.OK).body(eventRepository.findAllByStartDate(startDate));
     }
 }

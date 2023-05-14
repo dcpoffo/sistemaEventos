@@ -1,12 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 
 import { TableData } from '../../../components';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Form, Dropdown } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import { useAPI } from '../../../service/API';
 import AuthContext from '../../../store/authContext';
 
 import educameet from "../../../assets/img/educameet.png";
+import { useTranslation } from 'react-i18next';
+import { FaPlus } from 'react-icons/fa';
+import styles from './AddParticipantes.module.scss'
 
 type ParticipanteData = {
   file?: any,
@@ -17,9 +20,8 @@ type ParticipanteData = {
 }
 
 function AddParticipantes() {
-
-  const auth = useContext(AuthContext);
-
+  const navigate = useNavigate();
+  const { t } = useTranslation()
   const [state, setState] = useState<ParticipanteData>(
     {
       name: '',
@@ -27,15 +29,41 @@ function AddParticipantes() {
       tipo: '',
       password: ''
     })
-
+  const auth = useContext(AuthContext);
   const api = useAPI();
-
-  const navigate = useNavigate();
-
+  const imageInputRef = useRef<HTMLInputElement>(null)
   const [profileImage, setProfileImage] = useState<any>(educameet);
 
-  const updateState = (e: any, field: string) => {
-    setState((state) => ({ ...state, [field]: e.target.value }))
+  const onUpdate = (
+    e: React.ChangeEvent<any>,
+    name: 'name' | 'email' | 'tipo' | 'password',
+  ) => {
+    setState((state) => ({ ...state, [name]: e.target.value }))
+  }
+
+  function handleSubmit(e: any) {
+    e.preventDefault()
+
+    if (state.email && state.password) {
+      const formData = new FormData();
+      formData.append("file", state.file);
+      formData.append("name", state.name);
+      formData.append("email", state.email);
+      formData.append("tipo", state.tipo);
+      formData.append("password", state.password);
+
+      const htmlConfig = {
+        headers: {
+          Authorization: auth.user?.basicAuth,
+          'Content-Type': 'multipart/form-data',
+          // 'Acess-Control-Allow-Origin': '*',
+        },
+      }
+
+      api.post('participantes', state, htmlConfig).then(() => {
+        navigate('/principal/participantes')
+      })
+    }
   }
 
   const handleImageChange = (e: any) => {
@@ -49,90 +77,79 @@ function AddParticipantes() {
     if (file) {
       setState((state) => ({ ...state, file }))
       reader.readAsDataURL(file);
+    } else {
+      setProfileImage(educameet)
     }
-  }
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-
-    const htmlConfig = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Acess-Control-Allow-Origin': '*',
-        Authorization: auth.user?.basicAuth,
-      },
-    }
-
-    const formData = new FormData();
-    formData.append("file", state.file);
-    formData.append("name", state.name);
-    formData.append("email", state.email);
-    formData.append("tipo", state.tipo);
-    formData.append("password", state.password);
-
-
-    api.post('participantes', formData, htmlConfig).then(() => {
-      navigate('/principal/participantes')
-    })
   }
 
   return (
-    <div>
-      <h1>Cadastro de Participantes</h1>
+    <div className={'container'}>
+      <Card className={'col-lg-4 col-12 m-auto'}>
 
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
+        <Card.Header>
+          <Card.Title>{t('pages.participantes.add')}</Card.Title>
+        </Card.Header>
 
-          <Form.Group className='mb-3'>
-            <img src={profileImage} width={50} height={50} className='rounded-circle' alt={'profileImage'} />
-            <Form.Label> Imagem de Perfil </Form.Label>
-            <input
-              type='file'
-              className={'form-control'}
-              accept={'image/*'}
-              onChange={(e) => handleImageChange(e)}
-            />
-          </Form.Group>
+        <Card.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className='mb-3'>
+              <div onClick={() => imageInputRef.current?.click()} className={styles.imageContainer}>
+                <img
+                  src={profileImage}
+                  alt='profile image'
+                  width={80} height={75}
+                  className='rounded-circle me-2'
+                />
+                <FaPlus className={styles.plusButton} />
+                <input
+                  onChange={(e) => handleImageChange(e)}
+                  ref={imageInputRef}
+                  style={{ display: 'none' }}
+                  type={'file'}
+                  accept={'image/png, image/jpg'}
+                />
+              </div>
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='formBasicName'>
+              <Form.Label> {t('pages.participantes.name')} </Form.Label>
+              <Form.Control
+                type='text' placeholder='Digite com o nome do Participante'
+                value={state.name} onChange={(e) => onUpdate(e, 'name')}
+              />
+            </Form.Group>
 
-          <Form.Group className='mb-3'>
-            <Form.Label> Nome </Form.Label>
-            <Form.Control
-              type='text' placeholder='Digite com o nome do Participante'
-              value={state.name} onChange={(e) => updateState(e, 'name')}
-            />
-          </Form.Group>
+            <Form.Group className='mb-3' controlId='formBasicEmail'>
+              <Form.Label> E-mail/Login </Form.Label>
+              <Form.Control
+                type='email' placeholder='Digite o login (e-mail)'
+                value={state.email} onChange={(e) => onUpdate(e, 'email')}
+              />
+            </Form.Group>
 
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Label> E-mail/Login </Form.Label>
-            <Form.Control
-              type='email' placeholder='Digite o login (e-mail)'
-              value={state.email} onChange={(e) => updateState(e, 'email')}
-            />
-          </Form.Group>
+            <Form.Group className='mb-3' controlId='formBasicTipo'>
+              <Form.Label> Tipo (ACADÊMICO OU ORGANIZADOR)</Form.Label>
+              <Form.Select aria-label="tipo" value={state.tipo} onChange={(e) => onUpdate(e, 'tipo')}>
+                <option>Escolha o tipo </option>
+                <option value="ACADEMICO">ACADEMICO</option>
+                <option value="ORGANIZADOR">ORGANIZADOR</option>
+              </Form.Select>
+            </Form.Group>
 
-          <Form.Group className='mb-3'>
-            <Form.Label> Tipo (ACADÊMICO OU ORGANIZADOR)</Form.Label>
-            <Form.Select aria-label="tipo" value={state.tipo} onChange={(e) => updateState(e, 'tipo')}>
-              <option>Escolha o tipo </option>
-              <option value="ACADEMICO">ACADEMICO</option>
-              <option value="ORGANIZADOR">ORGANIZADOR</option>              
-            </Form.Select>             
-          </Form.Group>
+            <Form.Group className='mb-3' controlId='formBasicPassword'>
+              <Form.Label>Senha</Form.Label>
+              <Form.Control
+                type='password' placeholder='Senha'
+                value={state.password} onChange={(e) => onUpdate(e, 'password')}
+              />
+            </Form.Group>
 
-          <Form.Group className='mb-3' controlId='formBasicPassword'>
-            <Form.Label>Senha</Form.Label>
-            <Form.Control
-              type='password' placeholder='Senha'
-              value={state.password} onChange={(e) => updateState(e, 'password')}
-            />
-          </Form.Group>
-
-          <Button variant='primary' type='submit'>
-            Cadastrar
-          </Button>
-        </Form>
-      </Card.Body>
-    </div>
+            <Button variant='primary' type='submit'>
+              {t('actions.add')}
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div >
   )
 }
 

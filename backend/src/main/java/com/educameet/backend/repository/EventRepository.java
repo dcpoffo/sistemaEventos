@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.educameet.backend.model.Event;
 
+
+
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long>{
 
-    List<Event> findAllByStartDate(LocalDate startDate);
-    
+    List<Event> findAllByStartDate(LocalDate startDate);    
 }

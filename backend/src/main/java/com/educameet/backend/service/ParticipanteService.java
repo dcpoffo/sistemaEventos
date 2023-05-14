@@ -98,6 +98,10 @@ public class ParticipanteService {
         Participante participante = participanteRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Participante não encontrado"));
 
+        if (participante.getEvents().size() != 0) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("O participante não pode ser excluído pois é participante de algum evento");
+        }        
+
         participanteRepository.delete(participante);
 
         return ResponseEntity.status(HttpStatus.OK).build();

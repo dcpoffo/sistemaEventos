@@ -23,5 +23,37 @@ export default {
         'save-password': 'Lembrar senha',
       },
     },
+    profile: {
+      ROLE_ADMIN: 'Administrador',
+      ROLE_ACADEMICO: 'Acadêmico',
+      ROLE_ORGANIZADOR: 'Organizador',
+    },
+    actions: {
+      title: 'Ações',
+      add: 'Criar',
+      back: 'Voltar',
+      cancel: 'Cancelar',
+      save: 'Salvar',
+      delete: 'Excluir',
+      edit: 'Editar',
+    },
+    dialogs: {
+      remove: {
+        title: 'Excluir',
+        message: 'Deseja realmente excluir o item selecionado?',
+      },
+    },
+    pages: {
+      participantes: {
+        title: 'Participantes',
+        id: '#',
+        name: 'Nome',
+        email: 'E-mail',
+        tipo: 'Tipo',
+        password: 'Senha',
+        add: 'Cadastrar Participante',
+        edit: 'Alterar Participante',
+      }
+    }
   },
 }
